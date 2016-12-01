@@ -42,12 +42,12 @@ userAgent=r"""?P<userAgent>
             .*
            """
 p = re.compile(r"(%s)\ -\ -\ \[(%s)/(%s)/(%s)\:(%s)\ [\S]+\]\ \"(%s)?[\s]?(%s)?.*?\"\ (%s)\ (%s)\ \"(%s)\"\ \"(%s).*?\"" %( ip, date, month, year, log_time, method, request, status, bodyBytesSent, refer, userAgent ), re.VERBOSE)
-
-f=open(r'D:\nginx-1.8.1\logs\001.cn.access.log','r')
-loglines = follow(f)
-for line in loglines:
-	m = p.search(line)
-	if m:
-		#print(m.group(1),m.group(2),m.group(3),m.group(4),m.group(5),m.group(6),m.group(7),m.group(8),m.group(9),m.group(10),m.group(11))
-		x = parsetime(m.group(2), m.group(3), m.group(4), m.group(5))
-		conn_db(m.group(1),x,m.group(6),m.group(7),m.group(8),m.group(9),m.group(10),m.group(11))
+if __name__ == '__main__':
+	f=open(r'D:\nginx-1.8.1\logs\001.cn.access.log','r')
+	loglines = follow(f)
+	for line in loglines:
+		m = p.search(line)
+		if m:
+			#print(m.group(1),m.group(2),m.group(3),m.group(4),m.group(5),m.group(6),m.group(7),m.group(8),m.group(9),m.group(10),m.group(11))
+			x = parsetime(m.group(2), m.group(3), m.group(4), m.group(5))
+			conn_db(m.group(1),x,m.group(6),m.group(7),m.group(8),m.group(9),m.group(10),m.group(11))
