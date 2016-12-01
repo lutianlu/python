@@ -6,7 +6,7 @@ import pymysql
 
 def conn_db(ip,date,method,request,status,bodyBytesSent,refer,userAgent):
 	cmd="insert into test_log(ip,date,method,request,status,bodyBytesSent,refer,userAgent) values('%s','%s','%s','%s','%s','%s','%s','%s')" %(ip,date,method,request,status,bodyBytesSent,refer,userAgent)
-	conn = pymysql.connect(host='101.200.217.31', port=3306, user='root', passwd='root',db='yang')
+	conn = pymysql.connect(host='xxx.xxx.xxx.xxx', port=3306, user='xxxx', passwd='xxxx',db='xxxx')
 	cur = conn.cursor()
 	cur.execute(cmd) 
 	conn.commit()
