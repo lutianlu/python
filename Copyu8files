@@ -1,0 +1,24 @@
+import os,shutil
+from datetime import datetime
+
+def Copyu8file(spath,dpath,fb):
+	spath = [ spath + r'\{0}'.format(x) for x in fb ]
+	dpath = [ dpath + r'\{0}'.format(x) for x in fb ]
+	now = datetime.now().strftime('%Y%m%d')
+	sspath = [ x + r'\{0}'.format(now) for x in spath ]
+	ddpath = [ x + r'\{0}'.format(now) for x in dpath ]
+
+	try:	
+		for d in ddpath:		
+			os.makedirs(d)		
+			i = ddpath.index(d)		
+			for x in os.listdir(sspath[i]):
+				shutil.copy(sspath[i] + r'\{0}'.format(x),d)
+	except Exception as e:
+		return print('>_<')
+
+if __name__ == '__main__':
+	spath = r'\\x.x.x.x\备份数据'
+	dpath = r'D:\cw-date'
+	fb = ['ZT001','ZT002','ZT003','ZT004','ZT005','ZT007']
+	Copyu8file(spath,dpath,fb)
