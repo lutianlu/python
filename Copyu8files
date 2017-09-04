@@ -1,24 +1,56 @@
-import os,shutil
+import os
+import shutil
 from datetime import datetime
+import asyncio
 
-def Copyu8file(spath,dpath,fb):
-	spath = [ spath + r'\{0}'.format(x) for x in fb ]
-	dpath = [ dpath + r'\{0}'.format(x) for x in fb ]
-	now = datetime.now().strftime('%Y%m%d')
-	sspath = [ x + r'\{0}'.format(now) for x in spath ]
-	ddpath = [ x + r'\{0}'.format(now) for x in dpath ]
 
-	try:	
-		for d in ddpath:		
-			os.makedirs(d)		
-			i = ddpath.index(d)		
-			for x in os.listdir(sspath[i]):
-				shutil.copy(sspath[i] + r'\{0}'.format(x),d)
-	except Exception as e:
-		return print('>_<')
+def Copyu8file(spath, dpath, fb):
+    spath = [spath + r'\{0}'.format(x) for x in fb]
+    dpath = [dpath + r'\{0}'.format(x) for x in fb]
+    now = datetime.now().strftime('%Y%m%d')
+    sspath = [x + r'\{0}'.format(now) for x in spath]
+    ddpath = [x + r'\{0}'.format(now) for x in dpath]
+
+    for dk, dv in enumerate(ddpath):
+        print('正在复制文件......')
+        os.makedirs(dv)
+        for x in os.listdir(sspath[dk]):
+            shutil.copy(sspath[dk] + r'\{0}'.format(x), dv)
+            print(x + '文件已复制完毕,存储路径为' + dv)
 
 if __name__ == '__main__':
-	spath = r'\\x.x.x.x\备份数据'
-	dpath = r'D:\cw-date'
-	fb = ['ZT001','ZT002','ZT003','ZT004','ZT005','ZT007']
-	Copyu8file(spath,dpath,fb)
+    spath = r'\\x.x.x.x\备份数据'
+    dpath = r'D:\cw-date'
+    fb = ['ZT001', 'ZT002', 'ZT003', 'ZT004', 'ZT005', 'ZT007']
+    Copyu8file(spath, dpath, fb)
+
+##########################################################################
+
+
+async def consumer(dv, sspath):
+    print('正在复制文件......')
+    r = await asyncio.sleep(0.1)
+    os.makedirs(dv)
+    for x in os.listdir(sspath):
+        shutil.copy(sspath + r'\{0}'.format(x), dv)
+        print(sspath + x + '文件已复制完毕,存储路径为' + dv)
+
+
+def Copyu8file(spath, dpath, fb):
+
+    spath = [spath + r'\{0}'.format(x) for x in fb]
+    dpath = [dpath + r'\{0}'.format(x) for x in fb]
+    now = datetime.now().strftime('%Y%m%d')
+    sspath = [x + r'\{0}'.format(now) for x in spath]
+    ddpath = [x + r'\{0}'.format(now) for x in dpath]
+
+    loop = asyncio.get_event_loop()
+    tasks = [consumer(dv, sspath[dk]) for dk, dv in enumerate(ddpath)]
+    loop.run_until_complete(asyncio.wait(tasks))
+    loop.close()
+
+if __name__ == '__main__':
+    spath = r'\\x.x.x.x\备份数据'
+    dpath = r'D:\cw-date'
+    fb = ['ZT001', 'ZT002', 'ZT003', 'ZT004', 'ZT005', 'ZT007']
+    Copyu8file(spath, dpath, fb)
