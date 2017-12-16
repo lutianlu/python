@@ -12,3 +12,7 @@ with open(r'C:\Users\ThinkPads\Desktop\7.txt', 'r', encoding='UTF-8') as somefil
         z.append(dict(zip(y, n)))
         # print(o)
 print(z)
+
+for x in os.listdir(r'C:\Users\ThinkPads\Desktop\七期结业学员'):
+    os.renames(r'C:\Users\ThinkPads\Desktop\七期结业学员\%s' % x,
+               r'C:\Users\ThinkPads\Desktop\七期结业学员\%s.jpg' % (x.split()[0]))
